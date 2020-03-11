@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+  labels:
+    app: phpmyadmin-app
+spec:
+  selector:
+    app: phpmyadmin-app
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 5000
+      protocol: TCP
+      name: http
+  type: NodePort
+---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: wp-pv-claim
+#   labels:
+#     app: wordpress-app
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-deployment
+  labels:
+    app: phpmyadmin-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin-app
+    spec:
+      containers:
+      - image: my-phpmyadmin
+        name: my-phpmyadmin
+        ports:
+        - containerPort: 5000
+          name: my-phpmyadmin
+        imagePullPolicy: Never
+        env:
+        - name: PMA_HOST
+          value: mysql-service
+        - name: PMA_PORT
+          value: "3306"
+        - name: PMA_USER
+          value: rofernan
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+          # valueFrom:
+            # secretKeyRef:
+              # name: mysql-pass
+              # key: password
+      #   volumeMounts:
+      #   - name: wordpress-persistent-storage
+      #     mountPath: /var/www
+      # volumes:
+      # - name: wordpress-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName: wp-pv-claim

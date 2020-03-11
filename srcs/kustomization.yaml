@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+- name: nginx-config
+  files:
+  - nginx/nginx.conf
+
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=password
+
+resources:
+- my-nginx.yaml
+- my-ingress.yaml
+- my-wordpress.yaml
+- my-mysql.yaml
+- my-phpmyadmin.yaml
