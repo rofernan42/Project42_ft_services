@@ -25,16 +25,18 @@ fi
 server_ip=`minikube ip`
 
 # cp srcs/wordpress/wp-config_restore.php srcs/wordpress/wp-config.php
-sed -i.restore "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/wordpress/wp-config.php
-sed -i.restore "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
+# sed -i.restore "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/wordpress/wp-config.php
+# sed -i.restore "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
+sed -i.restore "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/mysql/wordpress.sql
+
 
 # eval $(minikube docker-env)
 
 
-docker build -t my-nginx ./srcs/nginx
-docker build -t my-mysql ./srcs/mysql
-docker build -t my-wordpress ./srcs/wordpress
-docker build -t my-phpmyadmin ./srcs/phpmyadmin
+# docker build -t my-nginx ./srcs/nginx
+# docker build -t my-mysql ./srcs/mysql
+# docker build -t my-wordpress ./srcs/wordpress
+# docker build -t my-phpmyadmin ./srcs/phpmyadmin
 
 
 # kubectl apply -k ./srcs/
