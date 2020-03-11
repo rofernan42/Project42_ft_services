@@ -24,22 +24,24 @@ fi
 
 server_ip=`minikube ip`
 
-# cp srcs/wordpress/wp-config_restore.php srcs/wordpress/wp-config.php
-# sed -i.restore "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/wordpress/wp-config.php
-# sed -i.restore "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
-sed -i.restore "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/mysql/wordpress.sql
-
+# Remplacer par IP
+sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/wordpress/wp-config.php
+sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
 
 # eval $(minikube docker-env)
+docker system prune -a
+docker build -t my-nginx ./srcs/nginx
+docker build -t my-mysql ./srcs/mysql
+docker build -t my-wordpress ./srcs/wordpress
+docker build -t my-phpmyadmin ./srcs/phpmyadmin
 
+# Remettre a l'etat initial
+sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/wordpress/wp-config.php
+sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/mysql/wordpress.sql
 
-# docker build -t my-nginx ./srcs/nginx
-# docker build -t my-mysql ./srcs/mysql
-# docker build -t my-wordpress ./srcs/wordpress
-# docker build -t my-phpmyadmin ./srcs/phpmyadmin
+kubectl apply -k ./srcs/
+minikube dashboard
 
-
-# kubectl apply -k ./srcs/
 # kubectl apply -f ./srcs/nginx.yaml
 # kubectl apply -f ./srcs/mysql.yaml
 # kubectl apply -f ./srcs/wordpress.yaml
