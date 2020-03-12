@@ -17,3 +17,4 @@ resources:
 - my-wordpress.yaml
 - my-mysql.yaml
 - my-phpmyadmin.yaml
+- my-influxdb.yaml
