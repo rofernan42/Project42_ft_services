@@ -7,6 +7,14 @@ fi
 if ! which minikube > /dev/null 2>&1
 then
 	echo "Please install Minikube"
+	echo "(run 'brew install minikube')"
+	exit 1
+fi
+
+if ! which kubectl > /dev/null 2>&1
+then
+	echo "Please install Kubectl"
+	echo "(run 'brew install kubernetes-cli')"
 	exit 1
 fi
 
@@ -38,6 +46,7 @@ docker build -t my-phpmyadmin ./srcs/phpmyadmin
 # Remettre a l'etat initial
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/wordpress/wp-config.php
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/mysql/wordpress.sql
+rm srcs/wordpress/wp-config.php.bak srcs/mysql/wordpress.sql.bak
 
 kubectl apply -k ./srcs/
 minikube dashboard

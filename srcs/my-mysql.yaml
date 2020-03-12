@@ -45,6 +45,7 @@ spec:
       labels:
         app: mysql-app
     spec:
+      restartPolicy: Always
       containers:
       - image: my-mysql
         name: my-mysql
@@ -58,7 +59,7 @@ spec:
               # key: password
         ports:
         - containerPort: 3306
-          # name: my-mysql
+          name: my-mysql
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql

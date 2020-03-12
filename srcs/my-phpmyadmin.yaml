@@ -46,6 +46,7 @@ spec:
       labels:
         app: phpmyadmin-app
     spec:
+      restartPolicy: Always
       containers:
       - image: my-phpmyadmin
         name: my-phpmyadmin
