@@ -15,14 +15,14 @@ LABEL	maintainer="Rofernan (rofernan@42.fr)"
 
 RUN		apk update \
 		&& apk add bash \
-		&& apk add influxdb \
-		&& mkdir ./var/lib/volumeclaim
+		&& apk add wget
 
-#COPY	create_db.tsm .
-COPY	my-influxdb.sh .
-#COPY	set_db.sh .
-#COPY	set_influxd.sh .
+RUN		wget https://dl.influxdata.com/telegraf/releases/telegraf-1.14.3_linux_amd64.tar.gz \
+		&& tar -xvf telegraf-1.14.3_linux_amd64.tar.gz \
+		&& rm -rf telegraf-1.14.3_linux_amd64.tar.gz
 
-EXPOSE	8086
+COPY	my-telegraf.sh .
+
+EXPOSE	4999
 
 CMD		["sh", "my-influxdb.sh"]

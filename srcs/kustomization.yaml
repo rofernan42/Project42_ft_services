@@ -18,3 +18,4 @@ resources:
 - my-mysql.yaml
 - my-phpmyadmin.yaml
 - my-influxdb.yaml
+- my-grafana.yaml
