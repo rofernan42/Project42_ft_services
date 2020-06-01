@@ -24,6 +24,10 @@ RUN	wget https://dl.grafana.com/oss/release/grafana-7.0.1.linux-amd64.tar.gz \
 	&& mv grafana* grafana
 
 COPY	my-grafana.sh .
+COPY	dashboards.yaml /grafana/conf/provisioning/dashboards/dashboards.yaml
+COPY	defaults.ini /grafana/conf/defaults.ini
+COPY	influxdb.yaml /grafana/conf/provisioning/datasources/influxdb.yaml
+COPY	wordpress.json /grafana/public/dashboards
 
 EXPOSE	3000
 
