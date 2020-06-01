@@ -13,16 +13,12 @@
 FROM	alpine:latest
 LABEL	maintainer="Rofernan (rofernan@42.fr)"
 
-RUN		apk update \
-		&& apk add bash \
-		&& apk add influxdb \
-		&& mkdir ./var/lib/volumeclaim
+RUN	apk update \
+	&& apk add bash \
+	&& apk add influxdb
 
-#COPY	create_db.tsm .
 COPY	my-influxdb.sh .
-#COPY	set_db.sh .
-#COPY	set_influxd.sh .
 
 EXPOSE	8086
 
-CMD		["sh", "my-influxdb.sh"]
+CMD	["sh", "my-influxdb.sh"]

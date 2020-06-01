@@ -13,18 +13,18 @@
 FROM	alpine:latest
 LABEL	maintainer="Rofernan (rofernan@42.fr)"
 
-RUN		apk update \
-		&& apk upgrade \
-		&& apk add wget \
-		&& apk add libc6-compat \
-		&& apk add bash
+RUN	apk update \
+	&& apk upgrade \
+	&& apk add libc6-compat \
+	&& apk add bash
 
-RUN		wget https://dl.grafana.com/oss/release/grafana-7.0.1.linux-amd64.tar.gz \
-		&& tar -xvf grafana-7.0.1.linux-amd64.tar.gz \
-		&& rm -rf grafana-7.0.1.linux-amd64.tar.gz
+RUN	wget https://dl.grafana.com/oss/release/grafana-7.0.1.linux-amd64.tar.gz \
+	&& tar -xvf grafana-7.0.1.linux-amd64.tar.gz \
+	&& rm -rf grafana-7.0.1.linux-amd64.tar.gz \
+	&& mv grafana* grafana
 
-COPY		my-grafana.sh .
+COPY	my-grafana.sh .
 
 EXPOSE	3000
 
-CMD		["sh", "my-grafana.sh"]
+CMD	["sh", "my-grafana.sh"]

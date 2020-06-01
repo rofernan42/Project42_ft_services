@@ -19,3 +19,4 @@ resources:
 - my-phpmyadmin.yaml
 - my-influxdb.yaml
 - my-grafana.yaml
+- my-telegraf.yaml

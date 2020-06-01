@@ -13,16 +13,17 @@
 FROM	alpine:latest
 LABEL	maintainer="Rofernan (rofernan@42.fr)"
 
-RUN		apk update \
-		&& apk add bash \
-		&& apk add wget
+RUN	apk update \
+	&& apk add bash
 
-RUN		wget https://dl.influxdata.com/telegraf/releases/telegraf-1.14.3_linux_amd64.tar.gz \
-		&& tar -xvf telegraf-1.14.3_linux_amd64.tar.gz \
-		&& rm -rf telegraf-1.14.3_linux_amd64.tar.gz
+RUN	wget https://dl.influxdata.com/telegraf/releases/telegraf-1.14.3-static_linux_amd64.tar.gz \
+	&& tar -xvf telegraf-1.14.3-static_linux_amd64.tar.gz \
+	&& cp telegraf/telegraf /usr/bin \
+	&& rm -rf /telegraf telegraf-1.14.3-static_linux_amd64.tar.gz
 
 COPY	my-telegraf.sh .
 
-EXPOSE	4999
+EXPOSE	8125
 
-CMD		["sh", "my-influxdb.sh"]
+CMD	["sh", "my-telegraf.sh"]
+

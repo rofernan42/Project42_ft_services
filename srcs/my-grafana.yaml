@@ -15,19 +15,6 @@ spec:
       name: http
   type: NodePort
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: gr-pv-claim
-  labels:
-    app: grafana-app
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,23 +41,3 @@ spec:
         - containerPort: 3000
           name: my-grafana
         imagePullPolicy: Never
-        env:
-        - name: INFLUXDB_NAME
-          value: grafana
-        - name: INFLUXDB_USER
-          value: rofernan
-        - name: INFLUXDB_HOST
-          value: influxdb-service
-        - name: DB_PASSWORD
-          value: password
-          # valueFrom:
-            # secretKeyRef:
-              # name: mysql-pass
-              # key: password
-              #volumeMounts:
-              #        - name: grafana-persistent-storage
-              #        mountPath: /var/www
-              #   volumes:
-              #    - name: grafana-persistent-storage
-              #   persistentVolumeClaim:
-              #    claimName: gr-pv-claim

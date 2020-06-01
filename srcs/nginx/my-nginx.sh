@@ -8,7 +8,6 @@ sed -i.bak "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh
 sed -i.bak "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
 rm /etc/ssh/sshd_config.bak
 
-# echo 'rofernan42' | passwd
 /usr/sbin/sshd
 
 sleep infinity

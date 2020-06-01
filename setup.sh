@@ -18,24 +18,27 @@ then
 	exit 1
 fi
 
-if ! minikube status > /dev/null 2>&1
-then
-	echo "Starting Minikube"
-	rm -rf ~/.minikube
-	mkdir -p /goinfre/${USER}/.minikube
-	ln -sf /goinfre/${USER}/.minikube ~/.minikube
-	minikube start --vm-driver=virtualbox --cpus=2 --disk-size=30000mb --memory=3000mb --extra-config=apiserver.service-node-port-range=1-35000
-	minikube addons enable metrics-server
-	minikube addons enable ingress
-	minikube addons enable dashboard
-fi
+#if ! minikube status > /dev/null 2>&1
+#then
+#	echo "Starting Minikube"
+#	rm -rf ~/.minikube
+#	mkdir -p /goinfre/${USER}/.minikube
+#	ln -sf /goinfre/${USER}/.minikube ~/.minikube
+#	minikube start --vm-driver=virtualbox --cpus=2 --disk-size=30000mb --memory=3000mb --extra-config=apiserver.service-node-port-range=1-35000
+#fi
+minikube addons enable metrics-server
+minikube addons enable ingress
+minikube addons enable dashboard
 
-server_ip=`minikube ip`
+
+#server_ip=`minikube ip`
+server_ip="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 
 # Remplacer par IP
 sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/nginx/index.html
 sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/wordpress/wp-config.php
 sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
+sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/my-telegraf.yaml
 
 # eval $(minikube docker-env)
 # docker system prune -a
@@ -44,12 +47,15 @@ docker build -t my-mysql ./srcs/mysql
 docker build -t my-wordpress ./srcs/wordpress
 docker build -t my-phpmyadmin ./srcs/phpmyadmin
 docker build -t my-influxdb ./srcs/influxdb
+docker build -t my-grafana ./srcs/grafana
+docker build -t my-telegraif ./srcs/telegraf
 
 # Remettre a l'etat initial
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/nginx/index.html
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/wordpress/wp-config.php
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/mysql/wordpress.sql
-rm srcs/wordpress/wp-config.php.bak srcs/mysql/wordpress.sql.bak srcs/nginx/index.html.bak
+sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/my-telegraf.yaml
+rm srcs/wordpress/wp-config.php.bak srcs/mysql/wordpress.sql.bak srcs/nginx/index.html.bak srcs/my-telegraf.yaml.bak
 
 kubectl apply -k ./srcs/
 minikube dashboard
