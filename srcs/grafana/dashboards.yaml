@@ -8,4 +8,4 @@ providers:
   disableDeletion: true
   updateIntervalSeconds: 10
   options:
-    path: /grafana/public/dashboards
+    path: /usr/share/grafana/dashboards

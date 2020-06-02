@@ -14,12 +14,9 @@ FROM	alpine:latest
 LABEL	maintainer="Rofernan (rofernan@42.fr)"
 
 RUN	apk update \
-	&& apk add bash
-
-RUN	wget https://dl.influxdata.com/telegraf/releases/telegraf-1.14.3-static_linux_amd64.tar.gz \
-	&& tar -xvf telegraf-1.14.3-static_linux_amd64.tar.gz \
-	&& cp telegraf/telegraf /usr/bin \
-	&& rm -rf /telegraf telegraf-1.14.3-static_linux_amd64.tar.gz
+	&& apk add bash \
+	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+	&& apk add telegraf@testing
 
 COPY	my-telegraf.sh .
 

@@ -13,7 +13,7 @@ secretGenerator:
 
 resources:
 - my-nginx.yaml
-- my-ingress.yaml
+  #- my-ingress.yaml
 - my-wordpress.yaml
 - my-mysql.yaml
 - my-phpmyadmin.yaml

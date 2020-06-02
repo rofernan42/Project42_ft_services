@@ -15,19 +15,6 @@ spec:
       name: http
   type: NodePort
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: wp-pv-claim
-  labels:
-    app: wordpress-app
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -63,14 +50,3 @@ spec:
           value: mysql-service
         - name: DB_PASSWORD
           value: password
-          # valueFrom:
-            # secretKeyRef:
-              # name: mysql-pass
-              # key: password
-        volumeMounts:
-        - name: wordpress-persistent-storage
-          mountPath: /var/www
-      volumes:
-      - name: wordpress-persistent-storage
-        persistentVolumeClaim:
-          claimName: wp-pv-claim

@@ -1,2 +1,1 @@
-#/bin/bash
-telegraf
+telegraf --config /etc/telegraf.conf

@@ -1,2 +1,1 @@
-#/bin/bash
-cd ./grafana/bin && ./grafana-server
+cd /usr/share/grafana/conf && grafana-server

@@ -16,18 +16,15 @@ LABEL	maintainer="Rofernan (rofernan@42.fr)"
 RUN	apk update \
 	&& apk upgrade \
 	&& apk add libc6-compat \
-	&& apk add bash
-
-RUN	wget https://dl.grafana.com/oss/release/grafana-7.0.1.linux-amd64.tar.gz \
-	&& tar -xvf grafana-7.0.1.linux-amd64.tar.gz \
-	&& rm -rf grafana-7.0.1.linux-amd64.tar.gz \
-	&& mv grafana* grafana
+	&& apk add bash \
+	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+	&& apk add grafana@testing
 
 COPY	my-grafana.sh .
-COPY	dashboards.yaml /grafana/conf/provisioning/dashboards/dashboards.yaml
-COPY	defaults.ini /grafana/conf/defaults.ini
-COPY	influxdb.yaml /grafana/conf/provisioning/datasources/influxdb.yaml
-COPY	wordpress.json /grafana/public/dashboards
+COPY	dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml
+COPY	influxdb.yaml /usr/share//grafana/conf/provisioning/datasources/influxdb.yaml
+COPY	defaults.ini /usr/share/grafana/conf/defaults.ini
+COPY	dashboards/ /usr/share/grafana/dashboards
 
 EXPOSE	3000
 

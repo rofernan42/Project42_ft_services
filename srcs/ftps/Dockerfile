@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/06 14:36:57 by rofernan          #+#    #+#              #
-#    Updated: 2020/03/11 18:05:07 by rofernan         ###   ########.fr        #
+#    Created: 2020/03/04 10:54:01 by rofernan          #+#    #+#              #
+#    Updated: 2020/03/12 15:08:36 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,22 @@ FROM	alpine:latest
 LABEL	maintainer="Rofernan (rofernan@42.fr)"
 
 RUN	apk update \
-	&& apk upgrade \
 	&& apk add bash \
-	&& apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session \
-	&& apk add phpmyadmin
+	&& apk add openssl \
+	&& apk add openssh-client openssh-server \
+	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+	&& apk add proftpd@testing
 
-COPY	config.inc.php /etc/phpmyadmin/config.inc.php
-COPY	my-phpmyadmin.sh .
+#RUN	mkdir -p /run/nginx
 
-EXPOSE	5000
+#RUN	rm /etc/nginx/nginx.conf
+#COPY	nginx.conf /etc/nginx/nginx.conf
 
-CMD	["sh", "my-phpmyadmin.sh"]
+COPY	my-ftps.sh .
+#COPY	index.html /usr/share/nginx/html/
+
+RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=FR/ST=75/L=Paris/O=42/CN=rofernan' -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+
+EXPOSE	21
+
+CMD	["sh", "my-ftps.sh"]
