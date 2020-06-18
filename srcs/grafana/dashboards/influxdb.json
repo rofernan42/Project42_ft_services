@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -46,11 +46,11 @@
         "x": 0,
         "y": 0
       },
-      "id": 6,
+      "id": 4,
       "options": {
         "colorMode": "background",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -100,7 +100,7 @@
             {
               "key": "io.kubernetes.container.name",
               "operator": "=",
-              "value": "my-wordpress"
+              "value": "my-influxdb"
             }
           ]
         }
@@ -126,12 +126,12 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 10,
+        "w": 11,
         "x": 4,
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 4,
+      "id": 6,
       "legend": {
         "avg": false,
         "current": false,
@@ -194,7 +194,7 @@
             {
               "key": "io.kubernetes.container.name",
               "operator": "=",
-              "value": "my-wordpress"
+              "value": "my-influxdb"
             }
           ]
         }
@@ -255,8 +255,8 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 6,
-        "w": 14,
+        "h": 8,
+        "w": 15,
         "x": 0,
         "y": 6
       },
@@ -324,7 +324,7 @@
             {
               "key": "io.kubernetes.container.name",
               "operator": "=",
-              "value": "my-wordpress"
+              "value": "my-influxdb"
             }
           ]
         }
@@ -333,7 +333,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU usage (%)",
+      "title": "CPU usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -395,7 +395,7 @@
     ]
   },
   "timezone": "",
-  "title": "my-wordpress",
-  "uid": "p1J_7fmMz",
+  "title": "my-influxdb",
+  "uid": "63mVGfiGz",
   "version": 1
 }

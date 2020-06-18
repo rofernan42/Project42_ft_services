@@ -1,16 +1,48 @@
-
----
-
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
+apiVersion: v1
+kind: Service
 metadata:
-  name: ingress-ftps
+  name: ftps-service
+  labels:
+    app: ftps-app
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: ftps-service
-          servicePort: 21
+  selector:
+    app: ftps-app
+  ports:
+    - port: 21
+      targetPort: 21
+      nodePort: 21
+      protocol: TCP
+      name: http
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps-deployment
+  labels:
+    app: ftps-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftps-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ftps-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: my-ftps
+        name: my-ftps
+        ports:
+        - containerPort: 21
+          name: my-ftps
+        imagePullPolicy: Never
+        env:
+        - name: SSL_USER
+          value: rofernan
+        - name: SSL_PASS
+          value: password

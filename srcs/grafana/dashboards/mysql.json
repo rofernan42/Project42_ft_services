@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 8,
+  "id": 6,
   "links": [],
   "panels": [
     {
@@ -100,7 +100,7 @@
             {
               "key": "io.kubernetes.container.name",
               "operator": "=",
-              "value": "my-wordpress"
+              "value": "my-mysql"
             }
           ]
         }
@@ -126,7 +126,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 10,
+        "w": 11,
         "x": 4,
         "y": 0
       },
@@ -194,7 +194,7 @@
             {
               "key": "io.kubernetes.container.name",
               "operator": "=",
-              "value": "my-wordpress"
+              "value": "my-mysql"
             }
           ]
         }
@@ -256,7 +256,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 6,
-        "w": 14,
+        "w": 15,
         "x": 0,
         "y": 6
       },
@@ -324,7 +324,7 @@
             {
               "key": "io.kubernetes.container.name",
               "operator": "=",
-              "value": "my-wordpress"
+              "value": "my-mysql"
             }
           ]
         }
@@ -395,7 +395,7 @@
     ]
   },
   "timezone": "",
-  "title": "my-wordpress",
-  "uid": "p1J_7fmMz",
-  "version": 1
+  "title": "my-mysql",
+  "uid": "FvBo7BmGz",
+  "version": 2
 }

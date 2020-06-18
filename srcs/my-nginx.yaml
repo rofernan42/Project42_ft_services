@@ -1,34 +1,3 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-spec:
-  strategy:
-    type: Recreate
-  selector:
-    matchLabels:
-      app: nginx-app
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: nginx-app
-    spec:
-      restartPolicy: Always
-      containers:
-      - image: my-nginx
-        name: my-nginx
-        imagePullPolicy: Never
-        volumeMounts:
-        - name: nginx-config
-          mountPath: /etc/nginx/nginx.conf
-          subPath: nginx.conf
-          readOnly: true
-      volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -55,6 +24,42 @@ spec:
     name: ssh
   selector:
     app: nginx-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nginx-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: my-nginx
+        name: my-nginx
+        imagePullPolicy: Never
+        env:
+        - name: SSH_USER
+          value: rofernan
+        - name: SSH_PASS
+          value: password
+          #        volumeMounts:
+                #        - name: nginx-config
+                #          mountPath: /etc/nginx/nginx.conf
+                #          subPath: nginx.conf
+                #          readOnly: true
+          #      volumes:
+          #        - name: nginx-config
+          #          configMap:
+          #            name: nginx-config
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress

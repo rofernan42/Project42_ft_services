@@ -18,7 +18,7 @@ RUN	apk update \
 	&& apk add libc6-compat \
 	&& apk add bash \
 	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-	&& apk add grafana@testing
+	&& apk add grafana@testing=7.0.3-r0
 
 COPY	my-grafana.sh .
 COPY	dashboards.yaml /usr/share/grafana/conf/provisioning/dashboards/dashboards.yaml

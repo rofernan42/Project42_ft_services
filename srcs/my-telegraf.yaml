@@ -15,20 +15,6 @@ spec:
       name: http
   type: NodePort
 ---
-#apiVersion: v1
-#kind: PersistentVolumeClaim
-#metadata:
-#  name: gr-pv-claim
-#  labels:
-#    app: telegraf-app
-#spec:
-#  accessModes:
-#    - ReadWriteOnce
-#  resources:
-#    requests:
-#      storage: 1Gi
-#---
----
 apiVersion: v1
 kind: Secret
 metadata:
@@ -41,7 +27,6 @@ stringData:
   INFLUXDB_USER_PASSWORD: password
 ---
 apiVersion: v1
-
 kind: ConfigMap
 metadata:
   name: telegraf-config
@@ -62,17 +47,17 @@ data:
       logfile = ""
       hostname = ""
       omit_hostname = true
-    ###############################################################################
-    #                            OUTPUT PLUGINS                                   #
-    ###############################################################################
+    ############################################
+    #              OUTPUT PLUGINS              #
+    ############################################
     [[outputs.influxdb]]
       urls = ["$INFLUXDB_URL"]
       database = "$INFLUXDB_DB"
       username = "$INFLUXDB_USER"
       password = "$INFLUXDB_USER_PASSWORD"
-    ###############################################################################
-    #                            INPUT PLUGINS                                    #
-    ###############################################################################
+    ############################################
+    #              INPUT PLUGINS               #
+    ############################################
     [[inputs.docker]]
       endpoint = "unix:///var/run/docker.sock"
       gather_services = false

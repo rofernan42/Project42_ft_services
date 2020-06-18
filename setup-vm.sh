@@ -39,6 +39,7 @@ sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/telegraf/telegraf.conf
 #eval $(minikube docker-env)
 docker system prune -a
 docker build -t my-nginx ./srcs/nginx
+docker build -t my-ftps ./srcs/ftps
 docker build -t my-mysql ./srcs/mysql
 docker build -t my-wordpress ./srcs/wordpress
 docker build -t my-phpmyadmin ./srcs/phpmyadmin
