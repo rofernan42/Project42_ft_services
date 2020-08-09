@@ -22,22 +22,21 @@ then
 	minikube start --vm-driver=docker --extra-config=apiserver.service-node-port-range=1-35000
 	sudo usermod -aG docker $(whoami)
 fi
+
 minikube addons enable metrics-server
 minikube addons enable ingress
 minikube addons enable dashboard
 
-
-#server_ip=`minikube ip`
 server_ip="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
 
 # Remplacer par IP
 sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/nginx/index.html
 sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/wordpress/wp-config.php
 sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
-sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/telegraf/telegraf.conf
+sed -i.bak "s/IP-IP/"$server_ip"-"$server_ip"/g" srcs/my-metallb.yaml
 
 #eval $(minikube docker-env)
-docker system prune -a
+#docker system prune -a
 docker build -t my-nginx ./srcs/nginx
 docker build -t my-ftps ./srcs/ftps
 docker build -t my-mysql ./srcs/mysql
@@ -51,10 +50,14 @@ docker build -t my-telegraf ./srcs/telegraf
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/nginx/index.html
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/wordpress/wp-config.php
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/mysql/wordpress.sql
-sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/telegraf/telegraf.conf
-rm srcs/wordpress/wp-config.php.bak srcs/mysql/wordpress.sql.bak srcs/nginx/index.html.bak srcs/telegraf/telegraf.conf.bak
+#sed -i.bak "s/"$server_ip"-"$server_ip"/IP-IP/g" srcs/my-metallb.yaml
+rm srcs/wordpress/wp-config.php.bak srcs/mysql/wordpress.sql.bak srcs/nginx/index.html.bak srcs/my-metallb.yaml.bak
 
 kubectl apply -k ./srcs/
+
+echo "Server IP : $server_ip"
+echo "username: rofernan   password: password"
+
 minikube dashboard
 
 #kubectl delete -k ./srcs/

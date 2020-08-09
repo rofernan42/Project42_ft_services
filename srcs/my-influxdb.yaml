@@ -9,11 +9,9 @@ spec:
     app: influxdb-app
   ports:
     - port: 8086
-      targetPort: 8086
-      nodePort: 8086
       protocol: TCP
       name: http
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: PersistentVolume

@@ -16,7 +16,7 @@ LABEL	maintainer="Rofernan (rofernan@42.fr)"
 RUN	apk update \
 	&& apk add bash \
 	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-	&& apk add telegraf@testing=1.14.3-r0
+	&& apk add telegraf@testing
 
 COPY	my-telegraf.sh .
 

@@ -9,11 +9,9 @@ spec:
     app: telegraf-app
   ports:
     - port: 8125
-      targetPort: 8125
-      nodePort: 8125
       protocol: TCP
       name: http
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Secret

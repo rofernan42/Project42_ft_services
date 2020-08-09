@@ -9,11 +9,11 @@ spec:
     app: wordpress-app
   ports:
     - port: 5050
-      targetPort: 5050
       nodePort: 5050
+      #      targetPort: 5050
       protocol: TCP
       name: http
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment

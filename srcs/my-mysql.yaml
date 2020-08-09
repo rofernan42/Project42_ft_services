@@ -9,11 +9,9 @@ spec:
     app: mysql-app
   ports:
     - port: 3306
-      targetPort: 3306
-      nodePort: 3306
       protocol: TCP
       name: http
-  type: NodePort
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: PersistentVolume

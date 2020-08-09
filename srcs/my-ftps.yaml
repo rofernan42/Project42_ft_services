@@ -9,11 +9,11 @@ spec:
     app: ftps-app
   ports:
     - port: 21
-      targetPort: 21
       nodePort: 21
+      #      targetPort: 21
       protocol: TCP
       name: http
-  type: NodePort
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
