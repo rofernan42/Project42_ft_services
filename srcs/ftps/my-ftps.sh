@@ -1,17 +1,7 @@
-#/usr/bin/ssh-keygen -A
-
-#/usr/sbin/nginx
-
-#chmod 755 /etc/ssh/*
-adduser -D $SSL_USER
-echo "$SSL_USER:$SSL_PASS" | chpasswd
-#sed -i.bak "s/#PermitRootLogin prohibit-password/PermitRootLogin yes/g" /etc/ssh/sshd_config
-#sed -i.bak "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
-#rm /etc/ssh/sshd_config.bak
-
-#/usr/sbin/sshd
-
-protfpd -n
-sleep infinity
-
+mkdir -p /ftps/$FTP_USER
+chmod 705 /ftps/$FTP_USER
+adduser -h /ftps/$FTP_USER -D $FTP_USER
+echo "$FTP_USER:$FTP_PASS" | chpasswd
+cat etc/ssl/certs/pure-ftpd.crt >> etc/ssl/private/pure-ftpd.pem
+/usr/sbin/pure-ftpd -j -Y 2 -p 21000:21000 -P "172.17.0.2"
 #/bin/bash

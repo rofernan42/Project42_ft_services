@@ -18,18 +18,12 @@ RUN	apk update \
 	&& apk add openssl \
 	&& apk add openssh-client openssh-server \
 	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-	&& apk add proftpd@testing=1.3.7_rc4-r0
-
-RUN	mkdir -p /var/run/proftpd
-
-#RUN	rm /etc/nginx/nginx.conf
-#COPY	nginx.conf /etc/nginx/nginx.conf
+	&& apk add pure-ftpd@testing
 
 COPY	my-ftps.sh .
-#COPY	index.html /usr/share/nginx/html/
 
-RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=FR/ST=75/L=Paris/O=42/CN=rofernan' -keyout /etc/ssl/private/ftps-selfsigned.key -out /etc/ssl/certs/ftps-selfsigned.crt
+RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=FR/ST=75/L=Paris/O=42/CN=rofernan' -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/certs/pure-ftpd.crt
 
-EXPOSE	21
+EXPOSE	21 21000
 
 CMD	["sh", "my-ftps.sh"]

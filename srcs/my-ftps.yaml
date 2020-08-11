@@ -10,9 +10,12 @@ spec:
   ports:
     - port: 21
       nodePort: 21
-      #      targetPort: 21
       protocol: TCP
-      name: http
+      name: ftps
+    - port: 21000
+      nodePort: 21000
+      protocol: TCP
+      name: ftps-data
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -42,7 +45,7 @@ spec:
           name: my-ftps
         imagePullPolicy: Never
         env:
-        - name: SSL_USER
+        - name: FTP_USER
           value: rofernan
-        - name: SSL_PASS
+        - name: FTP_PASS
           value: password

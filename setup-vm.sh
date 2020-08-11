@@ -24,7 +24,6 @@ then
 fi
 
 minikube addons enable metrics-server
-minikube addons enable ingress
 minikube addons enable dashboard
 
 server_ip="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
@@ -38,13 +37,13 @@ sed -i.bak "s/IP-IP/"$server_ip"-"$server_ip"/g" srcs/my-metallb.yaml
 #eval $(minikube docker-env)
 #docker system prune -a
 docker build -t my-nginx ./srcs/nginx
+#docker build -t my-mysql ./srcs/mysql
+#docker build -t my-wordpress ./srcs/wordpress
+#docker build -t my-phpmyadmin ./srcs/phpmyadmin
+#docker build -t my-influxdb ./srcs/influxdb
+#docker build -t my-grafana ./srcs/grafana
+#docker build -t my-telegraf ./srcs/telegraf
 docker build -t my-ftps ./srcs/ftps
-docker build -t my-mysql ./srcs/mysql
-docker build -t my-wordpress ./srcs/wordpress
-docker build -t my-phpmyadmin ./srcs/phpmyadmin
-docker build -t my-influxdb ./srcs/influxdb
-docker build -t my-grafana ./srcs/grafana
-docker build -t my-telegraf ./srcs/telegraf
 
 # Remettre a l'etat initial
 sed -i.bak "s/http:\/\/"$server_ip"/http:\/\/IP/g" srcs/nginx/index.html
