@@ -25,10 +25,13 @@ RUN	rm /etc/nginx/nginx.conf
 COPY	nginx.conf /etc/nginx/nginx.conf
 
 COPY	my-nginx.sh .
+COPY	check_sshd.sh .
 COPY	index.html /usr/share/nginx/html/
+
+RUN	chmod 777 /check_sshd.sh
 
 RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=FR/ST=75/L=Paris/O=42/CN=rofernan' -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 
-EXPOSE	80 443 22
+EXPOSE	80 443 22000
 
 CMD	["sh", "my-nginx.sh"]

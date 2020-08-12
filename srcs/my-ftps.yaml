@@ -18,6 +18,19 @@ spec:
       name: ftps-data
   type: LoadBalancer
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ftps-pv-claim
+  labels:
+    app: ftps-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,9 +56,18 @@ spec:
         ports:
         - containerPort: 21
           name: my-ftps
+        - containerPort: 21000
+          name: ftps-data
         imagePullPolicy: Never
         env:
         - name: FTP_USER
           value: rofernan
         - name: FTP_PASS
           value: password
+        volumeMounts:
+        - name: ftps-persistent-storage
+          mountPath: /ftps
+      volumes:
+      - name: ftps-persistent-storage
+        persistentVolumeClaim:
+          claimName: ftps-pv-claim

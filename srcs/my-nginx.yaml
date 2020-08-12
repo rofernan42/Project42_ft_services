@@ -9,17 +9,17 @@ spec:
   ports:
   - port: 80
     nodePort: 80
-    #    targetPort: 80
+    targetPort: 80
     protocol: TCP
     name: http
   - port: 443
     nodePort: 443
-    #    targetPort: 443
+    targetPort: 443
     protocol: TCP
     name: https
-  - port: 22
-    nodePort: 22
-    #    targetPort: 22
+  - port: 22000
+    nodePort: 22000
+    targetPort: 22000
     protocol: TCP
     name: ssh
   selector:
@@ -46,17 +46,23 @@ spec:
       - image: my-nginx
         name: my-nginx
         imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - check_sshd.sh
+          initialDelaySeconds: 20
+          periodSeconds: 10
         env:
         - name: SSH_USER
           value: rofernan
         - name: SSH_PASS
           value: password
-          #        volumeMounts:
-                #        - name: nginx-config
-                #          mountPath: /etc/nginx/nginx.conf
-                #          subPath: nginx.conf
-                #          readOnly: true
-          #      volumes:
-          #        - name: nginx-config
-          #          configMap:
-          #            name: nginx-config
+        ports:
+        - containerPort: 80
+          name: http
+        - containerPort: 443
+          name: https
+        - containerPort: 22000
+          name: ssh
+
