@@ -1,5 +1,6 @@
-if [ ! "$(ps -elf | grep -v grep | grep /usr/sbin/sshd)" ]
+if pgrep "/usr/sbin/sshd" > /dev/null
 then
+	exit 0
+else
 	exit 1
 fi
-exit 0
