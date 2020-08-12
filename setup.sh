@@ -35,8 +35,8 @@ sed -i.bak "s/http:\/\/IP/http:\/\/"$server_ip"/g" srcs/mysql/wordpress.sql
 sed -i.bak "s/SERVER-IP/"$server_ip"/g" srcs/ftps/my-ftps.sh
 sed -i.bak "s/IP-IP/"$server_ip"-"$server_ip"/g" srcs/my-metallb.yaml
 
-#eval $(minikube docker-env)
-#docker system prune -a
+eval $(minikube docker-env)
+
 docker build -t my-nginx ./srcs/nginx --quiet
 docker build -t my-mysql ./srcs/mysql --quiet
 docker build -t my-wordpress ./srcs/wordpress --quiet
@@ -59,23 +59,3 @@ echo "Server IP : $server_ip"
 echo "username: rofernan   password: password"
 
 minikube dashboard
-
-#kubectl delete -k ./srcs/
-#docker rm $(docker ps -a -f status=exited -q)
-#docker rmi $(docker images -a -q)
-
-
-# kubectl apply -f ./srcs/nginx.yaml
-# kubectl apply -f ./srcs/mysql.yaml
-# kubectl apply -f ./srcs/wordpress.yaml
-# kubectl apply -f ./srcs/phpmyadmin.yaml
-# kubectl apply -f ./srcs/kustomization.yaml
-
-
-# deploy web dashboard Kubernetes. Useful to manage the cluster.
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml
-
-#on influxdb:
-#influx - show databases - use <database> - show measurements - show field keys from <measurement>
-
-#to get plugins for telegraf (for measurements): https://docs.influxdata.com/telegraf/v1.14/plugins/plugin-list/

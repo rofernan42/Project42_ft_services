@@ -10,7 +10,7 @@ spec:
   ports:
     - port: 5000
       nodePort: 5000
-      #      targetPort: 5000
+      targetPort: 5000
       protocol: TCP
       name: http
   type: LoadBalancer

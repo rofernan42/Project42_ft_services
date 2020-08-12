@@ -16,7 +16,6 @@ LABEL	maintainer="Rofernan (rofernan@42.fr)"
 RUN	apk update \
 	&& apk add bash \
 	&& apk add openssl \
-	&& apk add openssh-client openssh-server \
 	&& printf "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
 	&& apk add pure-ftpd@testing
 

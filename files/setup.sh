@@ -69,3 +69,5 @@ minikube dashboard
 
 # deploy web dashboard Kubernetes. Useful to manage the cluster.
 # kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml
+
+#to get plugins for telegraf (for measurements): https://docs.influxdata.com/telegraf/v1.14/plugins/plugin-list/
