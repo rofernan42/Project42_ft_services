@@ -19,6 +19,7 @@ fi
 # Install last version of Minikube
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube /usr/local/bin
+rm minikube
 
 if ! minikube status > /dev/null 2>&1
 then
