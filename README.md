@@ -26,8 +26,10 @@ The services that need to be developped:
 ```
 sh setup.sh
 ```
-* note: the setup.sh is made for the Ecole 42 virtual machine. To run on Mac, run Docker, make
+Note: the setup.sh is made for the Ecole 42 virtual machine.
+
+To run on Mac, start Docker, make
 ```
 minikube --vm-driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
 ```
-and run setup.sh, it should work.
+and run the setup.sh, it should work.
