@@ -12,8 +12,8 @@ Each container has to be built using Alpine Linux (for performance reasons).
 The images must be built by ourselves, the usage of already built images (e.g. using DockerHub) is forbidden.
 
 The services that need to be developped:
-- the Kubernetes web dashboard to manage the cluster
-- a Load Balancer (MetalLB)
+- the Kubernetes web dashboard to manage the cluster.
+- a Load Balancer (MetalLB).
 - a Nginx server on ports 80 (http) and 443 (https). Port 80 should be a systematic redirection of type 301 to 443. The Nginx container must be accessed by logging into SSH.
 - a FTPS server listening on port 21.
 - a WordPress listening on port 5050, with a MySQL database (both in separate containers). The WordPress will have serveral users and an administrator.
