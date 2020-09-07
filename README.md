@@ -32,4 +32,6 @@ To run on Mac, start Docker, make
 ```
 minikube --vm-driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
 ```
-and run the setup.sh, it should work.
+and run the setup.sh, it should work (not tried).
+
+To access services: ```SERVER_IP:SERVICE_PORT```
