@@ -4,9 +4,13 @@ This is a System Administration and Networking project.
 It is an introduction to cluster management and deployment using Kubernetes technology.
 ## Instructions
 Develop an infrastructure of different services.
+
 Each service has to run in a dedicated container.
+
 Each container has to be built using Alpine Linux (for performance reasons).
+
 The images must be built by ourselves, the usage of already built images (e.g. using DockerHub) is forbidden.
+
 The services that need to be developped:
 - the Kubernetes web dashboard to manage the cluster
 - a Load Balancer (MetalLB)
@@ -22,4 +26,8 @@ The services that need to be developped:
 ```
 sh setup.sh
 ```
-* note: the setup.sh is made for the Ecole 42 virtual machine. To run on Mac, run Docker, and make
+* note: the setup.sh is made for the Ecole 42 virtual machine. To run on Mac, run Docker, make
+```
+minikube --vm-driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
+```
+and run setup.sh, it should work.
