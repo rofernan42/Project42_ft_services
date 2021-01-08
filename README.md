@@ -1,4 +1,4 @@
-# ft_services
+# ft_services (42 project)
 ## Summary
 This is a System Administration and Networking project.
 It is an introduction to cluster management and deployment using Kubernetes technology.
